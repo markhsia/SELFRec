@@ -31,7 +31,7 @@ class XSimGCL(GraphRecommender):
                 user_emb, pos_item_emb, neg_item_emb = rec_user_emb[user_idx], rec_item_emb[pos_idx], rec_item_emb[neg_idx]
                 rec_loss = bpr_loss(user_emb, pos_item_emb, neg_item_emb)
                 cl_loss = self.cl_rate * self.cal_cl_loss([user_idx,pos_idx],rec_user_emb,cl_user_emb,rec_item_emb,cl_item_emb)
-                batch_loss =  rec_loss + l2_reg_loss(self.reg, user_emb, pos_item_emb) + cl_loss
+                batch_loss =  rec_loss + l2_reg_loss(self.reg, user_emb, pos_item_emb) * 0.2 + cl_loss
                 # Backward and optimize
                 optimizer.zero_grad()
                 batch_loss.backward()
@@ -48,7 +48,7 @@ class XSimGCL(GraphRecommender):
         i_idx = torch.unique(torch.Tensor(idx[1]).type(torch.long)).cuda()
         user_cl_loss = InfoNCE(user_view1[u_idx], user_view2[u_idx], self.temp)
         item_cl_loss = InfoNCE(item_view1[i_idx], item_view2[i_idx], self.temp)
-        return user_cl_loss + item_cl_loss * 2
+        return user_cl_loss + item_cl_loss
 
 
     def save(self):
