@@ -48,7 +48,7 @@ class XSimGCL(GraphRecommender):
         i_idx = torch.unique(torch.Tensor(idx[1]).type(torch.long)).cuda()
         user_cl_loss = InfoNCE(user_view1[u_idx], user_view2[u_idx], self.temp)
         item_cl_loss = InfoNCE(item_view1[i_idx], item_view2[i_idx], self.temp)
-        return user_cl_loss * 5 + item_cl_loss
+        return user_cl_loss + item_cl_loss * 2
 
 
     def save(self):
