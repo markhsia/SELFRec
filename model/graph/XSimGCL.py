@@ -81,7 +81,7 @@ class XSimGCL_Encoder(nn.Module):
         })
         return embedding_dict
 
-    def forward(self, perturbed=False):
+    def forward(self, perturbed=True):
         ego_embeddings = torch.cat([self.embedding_dict['user_emb'], self.embedding_dict['item_emb']], 0)
         all_embeddings = []
         all_embeddings_cl = ego_embeddings
@@ -90,7 +90,7 @@ class XSimGCL_Encoder(nn.Module):
             if perturbed:
                 random_noise = torch.rand_like(ego_embeddings).cuda()
                 ego_embeddings += torch.sign(ego_embeddings) * F.normalize(random_noise, dim=-1) * self.eps
-            #all_embeddings.append(ego_embeddings)
+            all_embeddings.append(ego_embeddings)
             if k==self.layer_cl-1:
                 all_embeddings_cl = ego_embeddings
         final_embeddings = torch.stack(all_embeddings, dim=1)
