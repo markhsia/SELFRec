@@ -34,7 +34,7 @@ class XSimGCL(GraphRecommender):
                 target = 0.8
                 alpha = 0.5 +  (target - 0.5) * epoch / 20.0 
                 #alpha = target
-                batch_loss =  2 * alpha * rec_loss + 2 * l2_reg_loss(self.reg, user_emb, pos_item_emb) + 2 * (1 - alpha) * cl_loss
+                batch_loss =  0.5 * alpha * rec_loss + 2 * l2_reg_loss(self.reg, user_emb, pos_item_emb) + 0.5 * (1 - alpha) * cl_loss
                 # Backward and optimize
                 optimizer.zero_grad()
                 batch_loss.backward()
