@@ -29,7 +29,9 @@ class SimGCL(GraphRecommender):
                 user_emb, pos_item_emb, neg_item_emb = rec_user_emb[user_idx], rec_item_emb[pos_idx], rec_item_emb[neg_idx]
                 rec_loss = bpr_loss(user_emb, pos_item_emb, neg_item_emb)
                 cl_loss = self.cl_rate * self.cal_cl_loss([user_idx,pos_idx])
-                batch_loss =  rec_loss + l2_reg_loss(self.reg, user_emb, pos_item_emb) + cl_loss
+                target = 0.7
+                alpha = 0.5 +  (target - 0.5) * epoch / 20.0 
+                batch_loss =  alpha * rec_loss + l2_reg_loss(self.reg, user_emb, pos_item_emb) + (1 - alpha) * cl_loss
                 # Backward and optimize
                 optimizer.zero_grad()
                 batch_loss.backward()
