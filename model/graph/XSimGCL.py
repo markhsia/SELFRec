@@ -84,7 +84,7 @@ class XSimGCL_Encoder(nn.Module):
         })
         return embedding_dict
 
-    def forward(self, perturbed=False):
+    def forward(self, perturbed=True):
         ego_embeddings = torch.cat([self.embedding_dict['user_emb'], self.embedding_dict['item_emb']], 0)
         all_embeddings = []
         all_embeddings_cl = ego_embeddings
