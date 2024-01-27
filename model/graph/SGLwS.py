@@ -34,7 +34,8 @@ class SGLwS(GraphRecommender):
                 target = 0.8
                 alpha = 0.5 +  (target - 0.5) * epoch / 20.0 
                 #alpha = target
-                batch_loss =  alpha * rec_loss + 2 * l2_reg_loss(self.reg, user_emb, pos_item_emb) + (1 - alpha) * cl_loss
+                #batch_loss =  alpha * rec_loss + 2 * l2_reg_loss(self.reg, user_emb, pos_item_emb) + (1 - alpha) * cl_loss
+                batch_loss =  alpha * rec_loss + 1 * l2_reg_loss(self.reg, user_emb, pos_item_emb) + (1 - alpha) * cl_loss
                 # Backward and optimize
                 optimizer.zero_grad()
                 batch_loss.backward()
