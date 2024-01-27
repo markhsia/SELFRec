@@ -13,13 +13,13 @@ from util.loss_torch import bpr_loss, l2_reg_loss, InfoNCE
 class SGLwS(GraphRecommender):
     def __init__(self, conf, training_set, test_set):
         super(SGLwS, self).__init__(conf, training_set, test_set)
-        args = OptionConf(self.config['XSimGCL'])
+        args = OptionConf(self.config['SGLwS'])
         self.cl_rate = float(args['-lambda'])
         self.eps = float(args['-eps'])
         self.temp = float(args['-tau'])
         self.n_layers = int(args['-n_layer'])
         self.layer_cl = int(args['-l*'])
-        self.model = XSimGCL_Encoder(self.data, self.emb_size, self.eps, self.n_layers,self.layer_cl)
+        self.model = SGLwS_Encoder(self.data, self.emb_size, self.eps, self.n_layers,self.layer_cl)
 
     def train(self):
         model = self.model.cuda()
