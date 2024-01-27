@@ -12,7 +12,7 @@ from util.loss_torch import bpr_loss, l2_reg_loss, InfoNCE
 
 class SGLwS(GraphRecommender):
     def __init__(self, conf, training_set, test_set):
-        super(XSimGCL, self).__init__(conf, training_set, test_set)
+        super(SGLwS, self).__init__(conf, training_set, test_set)
         args = OptionConf(self.config['XSimGCL'])
         self.cl_rate = float(args['-lambda'])
         self.eps = float(args['-eps'])
@@ -66,7 +66,7 @@ class SGLwS(GraphRecommender):
 
 class SGLwS_Encoder(nn.Module):
     def __init__(self, data, emb_size, eps, n_layers, layer_cl):
-        super(XSimGCL_Encoder, self).__init__()
+        super(SGLwS_Encoder, self).__init__()
         self.data = data
         self.eps = eps
         self.emb_size = emb_size
