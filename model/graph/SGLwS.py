@@ -34,8 +34,9 @@ class SGLwS(GraphRecommender):
                 cl_loss = self.cl_rate * self.cal_cl_loss([user_idx,pos_idx],rec_user_emb,cl_user_emb,rec_item_emb,cl_item_emb)
                 target = 0.8
                 #alpha = 0.5 +  (target - 0.5) * epoch / 20.0 
+                #alpha = 0.5 + (target - 0.5 ) * 2 *math.sin(math.pi*0.5 * epoch / 20.0)
                 if epoch<=9:
-                    alpha = 0.5 + (target - 0.5 ) * 2 *math.sin(math.pi*0.5 * epoch / 20.0)
+                    alpha = 0.5 +  (target - 0.5) * epoch / 20.0 
                 else:
                     alpha-=0.01
                 #alpha = target
