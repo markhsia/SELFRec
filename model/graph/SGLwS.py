@@ -7,10 +7,10 @@ from util.sampler import next_batch_pairwise
 from base.torch_interface import TorchGraphInterface
 from util.loss_torch import bpr_loss, l2_reg_loss, InfoNCE
 
-# Paper: XSimGCL - Towards Extremely Simple Graph Contrastive Learning for Recommendation
+# based on the Paper: XSimGCL - Towards Extremely Simple Graph Contrastive Learning for Recommendation
+# modified to the SGL with the Scheduler(SGLwS) by Mark Hsia 2024/1/27
 
-
-class XSimGCL(GraphRecommender):
+class SGLwS(GraphRecommender):
     def __init__(self, conf, training_set, test_set):
         super(XSimGCL, self).__init__(conf, training_set, test_set)
         args = OptionConf(self.config['XSimGCL'])
@@ -64,7 +64,7 @@ class XSimGCL(GraphRecommender):
         return score.cpu().numpy()
 
 
-class XSimGCL_Encoder(nn.Module):
+class SGLwS_Encoder(nn.Module):
     def __init__(self, data, emb_size, eps, n_layers, layer_cl):
         super(XSimGCL_Encoder, self).__init__()
         self.data = data
