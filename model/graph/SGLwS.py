@@ -39,7 +39,7 @@ class SGLwS(GraphRecommender):
                     #alpha = 0.5 +  (target - 0.5) * epoch / 20.0 
                 #alpha = target
                 
-                if epoch<=1:
+                if epoch<=9:
                     batch_loss =  rec_loss +  cl_loss
                     self.bestrate = cl_loss.cpu()/rec_loss.cpu()
                 else:
