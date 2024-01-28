@@ -21,7 +21,7 @@ class SGLwS(GraphRecommender):
         self.n_layers = int(args['-n_layer'])
         self.layer_cl = int(args['-l*'])
         self.model = SGLwS_Encoder(self.data, self.emb_size, self.eps, self.n_layers,self.layer_cl)
-
+        self.bestrate = 5.0
     def train(self):
         model = self.model.cuda()
         optimizer = torch.optim.Adam(model.parameters(), lr=self.lRate)
@@ -39,13 +39,13 @@ class SGLwS(GraphRecommender):
                     #alpha = 0.5 +  (target - 0.5) * epoch / 20.0 
                 #alpha = target
                 
-                if epoch<=9:
+                if epoch<=1:
                     batch_loss =  rec_loss +  cl_loss
-                    rate = cl_loss/rec_loss
+                    self.bestrate = cl_loss/rec_loss
                 else:
                     #alpha =  0.5 * (epoch-9) / 11.0 
                     #batch_loss =  (1 - alpha) * rec_loss + (1 + alpha) * cl_loss + (cl_loss/rec_loss - 5)**2
-                    batch_loss =  rec_loss +  cl_loss + (cl_loss/rec_loss - rate)**2
+                    batch_loss =  rec_loss +  cl_loss + (cl_loss/rec_loss - self.bestrate)**2
                     
                 # Backward and optimize
                 optimizer.zero_grad()
