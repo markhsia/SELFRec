@@ -41,11 +41,10 @@ class SGLwS(GraphRecommender):
                 
                 if epoch<=9:
                     batch_loss =  rec_loss +  cl_loss
-                    self.bestrate = cl_loss.cpu()/rec_loss.cpu()
                 else:
                     #alpha =  0.5 * (epoch-9) / 11.0 
                     #batch_loss =  (1 - alpha) * rec_loss + (1 + alpha) * cl_loss + (cl_loss/rec_loss - 5)**2
-                    batch_loss =  rec_loss +  cl_loss + (cl_loss/rec_loss - self.bestrate)**2
+                    batch_loss =  rec_loss +  cl_loss + (cl_loss/rec_loss - 5.5)**2
                     
                 # Backward and optimize
                 optimizer.zero_grad()
