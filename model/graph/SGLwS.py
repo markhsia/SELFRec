@@ -48,7 +48,7 @@ class SGLwS(GraphRecommender):
                     #batch_loss =  rec_loss +  cl_loss + (cl_loss/rec_loss - 5.5)**2
                 """
 
-                alpha = math.sin(2*math.pi * epoch / 10.0) 
+                alpha = 0.5 * math.sin(2*math.pi * epoch / 10.0) 
                 batch_loss =  (1 - alpha) * rec_loss + (1 + alpha) * cl_loss 
                 
                 # Backward and optimize
