@@ -38,14 +38,19 @@ class SGLwS(GraphRecommender):
                 #if epoch<=12:
                     #alpha = 0.5 +  (target - 0.5) * epoch / 20.0 
                 #alpha = target
-                
+
+                """
                 if epoch<=9:
                     batch_loss =  rec_loss +  cl_loss
                 else:
                     alpha =  0.8 * (epoch-9) / 11.0 
                     batch_loss =  (1 - alpha) * rec_loss + (1 + alpha) * cl_loss + (cl_loss/rec_loss - 5)**2
                     #batch_loss =  rec_loss +  cl_loss + (cl_loss/rec_loss - 5.5)**2
-                    
+                """
+
+                alpha = math.sin(2*math.pi * epoch / 10.0) 
+                batch_loss =  (1 - alpha) * rec_loss + (1 + alpha) * cl_loss 
+                
                 # Backward and optimize
                 optimizer.zero_grad()
                 batch_loss.backward()
