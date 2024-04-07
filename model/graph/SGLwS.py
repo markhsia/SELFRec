@@ -7,6 +7,7 @@ from util.sampler import next_batch_pairwise
 from base.torch_interface import TorchGraphInterface
 from util.loss_torch import bpr_loss, l2_reg_loss, InfoNCE
 import math
+import numpy as np
 
 # based on the Paper: XSimGCL - Towards Extremely Simple Graph Contrastive Learning for Recommendation
 # modified to the SGL with the Scheduler(SGLwS) by Mark Hsia 2024/1/27
@@ -50,7 +51,10 @@ class SGLwS(GraphRecommender):
 
                 alpha = 1.0 * math.sin(2*math.pi * epoch / 10.0) 
                 #alpha = 0.5 * math.sin(2*math.pi * epoch / 10.0) 
-                #alpha = 0.5 * math.cos(2*math.pi * epoch / 10.0) 
+                #alpha = 0.5 * math.cos(2*math.pi * epoch / 10.0)
+
+                c = np.random.normal(0,1, (1))
+                alpha = c[0]
                 batch_loss =  (1 - alpha) * rec_loss + (1 + alpha) * cl_loss 
                 
                 # Backward and optimize
