@@ -52,11 +52,11 @@ class SGLwS(GraphRecommender):
                 #alpha = 1.0 * math.sin(2*math.pi * epoch / 10.0) 
                 #alpha = 0.5 * math.sin(2*math.pi * epoch / 10.0) 
                 #alpha = 0.5 * math.cos(2*math.pi * epoch / 10.0)
+                #alpha = 1.0 * math.cos(2*math.pi * epoch / 10.0)
 
-                #c = np.random.normal(0,1, (1))
-                #alpha = c[0]
+                c = 2.0 * np.random.normal(0,1, (1))
+                alpha = c[0]
 
-                alpha = 1.0 * math.cos(2*math.pi * epoch / 10.0)
                 batch_loss =  (1 - alpha) * rec_loss + (1 + alpha) * cl_loss 
                 
                 # Backward and optimize
