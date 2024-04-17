@@ -67,6 +67,8 @@ class SGLwS(GraphRecommender):
                 alpha=-1
                 if (epoch%p)<p/2:
                     alpha=1    
+
+                alpha=1
                 batch_loss =  (1 - alpha) * rec_loss + (1 + alpha) * cl_loss 
                 
                 # Backward and optimize
